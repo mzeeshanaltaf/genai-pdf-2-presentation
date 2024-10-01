@@ -4,7 +4,7 @@ Turn PDFs into Powerful Presentations with a Touch of Magic!📄➡️📊
 SlideGenie is an AI-powered web app that transforms your PDF files into clear, concise, and well-structured presentations in just a few clicks. 🎯✨ Upload any PDF, let the AI work its magic, and receive a professional slideshow with titles, bullet points, and presenter notes — all done for you! 📝⚡ Perfect for creating impactful presentations effortlessly.
 
 # Application Link
--
+https://slidegenie.streamlit.app/
 
 # Technologies Used
 * langchain -- Orchestration framework for the development of applications using large language models (LLMs
