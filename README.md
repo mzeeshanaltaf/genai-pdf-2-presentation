@@ -1,14 +1,16 @@
 # SlideGenie
-Turn PDFs into Powerful Presentations with a Touch of Magic!📄➡️📊
+Transform PDFs into Engaging Presentations and Compelling Podcast Scripts!" 📄➡️✨
 
-SlideGenie is an AI-powered web app that transforms your PDF files into clear, concise, and well-structured presentations in just a few clicks. 🎯✨ Upload any PDF, let the AI work its magic, and receive a professional slideshow with titles, bullet points, and presenter notes — all done for you! 📝⚡ Perfect for creating impactful presentations effortlessly.
+SlideGenie is your all-in-one solution for turning PDF documents into clear, concise, and well-structured presentations and engaging podcast scripts. 🚀✨ Upload any PDF, let our AI work its magic, and receive professional-grade slides and a captivating narrative ready to go! Perfect for educators, business professionals, and content creators looking to enhance their communication effortlessly. 📝🎧
 
 # Application Link
 https://slidegenie.streamlit.app/
 
 # Technologies Used
 * langchain -- Orchestration framework for the development of applications using large language models (LLMs
-* LLM -- gpt-4o-mini from OpenAI to transform pdf text to clear, concise and well structured presentation
+* LLMs: -- To generate well-structured presentations and engaging podcast scripts
+  * gpt-4o-mini from OpenAI
+  * llama-3.2-90b-text-preview from Groq
 * streamlit -- Front end development
    
 # System Requirements
@@ -25,5 +27,10 @@ You must have Python 3.9 or later installed. Earlier versions of python may not 
    `streamlit run main.py`
 
 # Screen Shots
-![image](https://github.com/user-attachments/assets/406f7997-3f6f-417c-85d8-52baa67af76e)
+![image](https://github.com/user-attachments/assets/78380385-b208-4460-93e5-3d7492be92e9)
+![image](https://github.com/user-attachments/assets/320d8bcc-1a94-4c5e-b2c9-b961ed4ca48a)
+![image](https://github.com/user-attachments/assets/14a0010b-a13c-4969-a9ee-6034f0a5779e)
+![image](https://github.com/user-attachments/assets/8a567794-dad3-4b6c-aef9-296d495f7113)
+
+
 
