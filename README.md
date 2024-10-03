@@ -27,10 +27,11 @@ You must have Python 3.9 or later installed. Earlier versions of python may not 
    `streamlit run main.py`
 
 # Screen Shots
-![image](https://github.com/user-attachments/assets/78380385-b208-4460-93e5-3d7492be92e9)
-![image](https://github.com/user-attachments/assets/320d8bcc-1a94-4c5e-b2c9-b961ed4ca48a)
-![image](https://github.com/user-attachments/assets/14a0010b-a13c-4969-a9ee-6034f0a5779e)
-![image](https://github.com/user-attachments/assets/8a567794-dad3-4b6c-aef9-296d495f7113)
+![image](https://github.com/user-attachments/assets/b7d0e90c-6392-4b7d-a7ff-e7b79bfcf485)
+![image](https://github.com/user-attachments/assets/1a280697-e7f9-401c-9fea-eb0478e70819)
+![image](https://github.com/user-attachments/assets/edce3d38-b80a-4a7a-921d-9fd19f60571a)
+![image](https://github.com/user-attachments/assets/1dd41dfc-38b9-4a04-9cd9-ccb2d923d631)
+
 
 
 
