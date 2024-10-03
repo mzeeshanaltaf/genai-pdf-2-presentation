@@ -1,3 +1,5 @@
+from display import *
+from config import *
 from util import *
 
 # Set the application title and description
