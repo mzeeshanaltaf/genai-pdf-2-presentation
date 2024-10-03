@@ -1,8 +1,6 @@
 import pdfplumber
 from pptx import Presentation
 from io import BytesIO
-from langchain_core.prompts import ChatPromptTemplate
-from schemas import *
 
 
 # Function to extract text from PDF file
@@ -17,33 +15,6 @@ def extract_text_from_pdf(pdf_file_path):
             extracted_text += page.extract_text()
 
     return extracted_text
-
-
-# This function uses an LLM to create well-structured slides with key points based on provided text
-def generate_presentation(number_of_slides, number_of_bullet_points, extracted_text, llm):
-    # Create prompt
-    prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE_SLIDES)
-    prompt = prompt_template.format(number_of_slides=number_of_slides,
-                                    number_of_bullet_points=number_of_bullet_points,
-                                    text=extracted_text)
-
-    # Get structured output from LLM
-    structured_llm = llm.with_structured_output(CreatePresentation)
-    structured_response = structured_llm.invoke(prompt)
-    presentation_data = structured_response.dict()
-    return presentation_data
-
-
-# This function uses an LLM to create podcast script based on provided text
-def generate_podcast(extracted_text, llm):
-    prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE_PODCAST)
-    prompt_podcast = prompt_template.format(text=extracted_text)
-
-    # Get structured output from llm
-    structured_llm = llm.with_structured_output(CreatePodcast)
-    structured_response = structured_llm.invoke(prompt_podcast)
-    podcast_data = structured_response.dict()
-    return podcast_data
 
 
 # This function generates PowerPoint presentation (pptx) from the presentation content provided to it

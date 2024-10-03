@@ -22,16 +22,21 @@ Given text: {text}
 
 # Prompt template
 PROMPT_TEMPLATE_PODCAST = """
-You are an expert for creating podcast episodes.
+For a given text, create a podcast episode. The number of host(s) is/are {number_of_hosts}. Use the name of host(s) 
+from the following list: {host_names}.
 
-For the given text, create a podcast episode from it. Structure it in a podcast format with the following elements:
+Please structure the podcast with these elements:
 
-1- Introduction: Start with a brief, engaging introduction summarizing the theme of the podcast.
-2- Main Content: Break down the provided text into sections, each covering a specific topic or point. 
-Add transitions between sections to maintain a smooth flow.
-3- Host's Commentary: Include occasional commentary or questions from the podcast host to make the content conversational.
-4- Closing Remarks: Conclude with a summary of the key points discussed and encourage listeners to engage with the podcast.
-5- Tone: Make the tone friendly, informative, and engaging, suitable for a general audience.
+Introduction: Start with an engaging introduction where the host(s) introduce themselves and briefly outline the topic. 
+If there is more than one host, ensure they each introduce themselves and provide a brief overview of what 
+they'll discuss.
+Host Dialogue: For a single host, structure the content in a monologue format, but for multiple hosts, distribute the 
+content so each host covers different sections of the text, alternating in a natural conversation.
+Main Content: Break down the provided text into sections, each covering a specific topic or point. Host(s) should 
+explain and discuss each section in a way that flows naturally.
+Closing Remarks: The host(s) should summarize the key points or insights from the discussion and wrap up the podcast. 
+If there are multiple hosts, each one can share their final thoughts.
+Tone: The podcast should be conversational, informative, and engaging, suitable for a general audience.
 
 Given text: {text}
 
@@ -54,15 +59,16 @@ class CreatePresentation(BaseModel):
 
 # Structure the podcast schema using Pydantic
 class PodcastSection(BaseModel):
-    """Sections of the Podcast. It includes section title and host commentary"""
+    """Sections of the Podcast. It includes section title and host commentary by single or multiple hosts"""
     section_title: str = Field(description="Title of the podcast section")
-    host_commentary: str = Field(description="Podcast host commentary")
+    host_commentary: List[str] = Field(description="List of host commentary")
 
 
 class CreatePodcast(BaseModel):
     """Create podcast episode"""
     podcast_title: str = Field(description="Title of the podcast episode")
     introduction: str = Field(description="Podcast episode Introduction")
-    sections: List[PodcastSection] = Field(description="Podcast sections along with host commentary")
+    sections: List[PodcastSection] = Field(description="Podcast sections along with single or multiple host commentary")
     closing_remarks: str = Field(description="Podcast closing remarks")
+
 
