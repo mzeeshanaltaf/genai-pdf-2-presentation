@@ -81,6 +81,18 @@ def extract_podcast_text(podcast_data):
     return extracted_text
 
 
+# This function extract few sentences from the podcast data
+def extract_sentences_from_podcast(podcast_data):
+    paragraph = podcast_data['introduction']
+    # Split the paragraph into sentences using period, exclamation mark, and question mark as delimiters
+    sentences = [sentence.strip() for sentence in paragraph.split('.') if sentence.strip()]
+
+    # Extract the first two sentences
+    extracted_text = ". ".join(sentences[:2]) + "."
+
+    return extracted_text
+
+
 # Function to display podcast data in a structured way
 def display_podcast(podcast_data, file_name):
     st.subheader('Podcast Script🎙️:')

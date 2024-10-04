@@ -2,6 +2,7 @@ from display import *
 from config import *
 from util import *
 from llm import *
+from tts import *
 
 if "scope" not in st.session_state:
     st.session_state.scope = False
@@ -60,6 +61,7 @@ if content_selection == 'Both':
     button_icon = icon = ':material/play_arrow:'
     success_text = "Presentation & Podcast Generated Successfully!"
 
+
 # File uploader
 st.subheader("Upload a PDF file:")
 uploaded_pdf = st.file_uploader("Upload a PDF file", type=["pdf"], label_visibility="collapsed")
@@ -103,6 +105,7 @@ if uploaded_pdf is not None:
 
         if content_selection in ['Podcast', 'Both'] and st.session_state.podcast_data is not None:
             display_podcast(st.session_state.podcast_data, file_name)
+            podcast_audio(st.session_state.podcast_data)
 
 
 # Display footer
