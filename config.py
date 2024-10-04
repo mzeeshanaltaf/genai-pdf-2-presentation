@@ -31,7 +31,11 @@ def configure_podcast_parameters():
     placeholder_names = ['Zeeshan', 'Einstein', 'Newton', 'Elon', 'Misbah']
     with st.expander('Configure Podcast parameters', icon=':material/tune:', expanded=True):
         with st.container(border=True):
+            # Configuration for audio toggle and number of hosts
+            audio = st.toggle('Generate Audio', value=False)
             number_of_hosts = st.number_input('Number of Host(s):', min_value=1, max_value=5, value=3, step=1)
+
+            # Configuration for host names
             st.write('Host Name(s):')
             host_names = []
             cols = st.columns(number_of_hosts)
@@ -39,7 +43,7 @@ def configure_podcast_parameters():
             for idx, col in enumerate(cols):
                 host_name = col.text_input(f'Name of Host {idx + 1}:', value=placeholder_names[idx], key=f'host_name_{idx}')
                 host_names.append(host_name)
-    return number_of_hosts, host_names
+    return number_of_hosts, host_names, audio
 
 
 # Function to configure LLM options for user selection

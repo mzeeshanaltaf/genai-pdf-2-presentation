@@ -12,7 +12,8 @@ if "pptx_file" not in st.session_state:
     st.session_state.pptx_file = None
 if "podcast_data" not in st.session_state:
     st.session_state.podcast_data = None
-
+if "audio_stream" not in st.session_state:
+    st.session_state.audio_stream = None
 
 # Set the application title and description
 page_title = "SlideGenie 🎤📊"
@@ -37,12 +38,12 @@ if content_selection == 'Presentation':
     # Configure presentation parameters
     number_of_slides, number_of_bullet_points = configure_presentation_parameters()
     button_text = 'Generate Presentation'
-    button_icon = icon=':material/jamboard_kiosk:'
+    button_icon = icon = ':material/jamboard_kiosk:'
     success_text = "Presentation Generated Successfully!"
 
 if content_selection == 'Podcast':
     # Configure podcast parameters
-    number_of_hosts, host_names = configure_podcast_parameters()
+    number_of_hosts, host_names, podcast_audio = configure_podcast_parameters()
     button_text = "Generate Podcast"
     button_icon = icon = ':material/podcasts:'
     success_text = "Podcast Generated Successfully!"
@@ -55,12 +56,11 @@ if content_selection == 'Both':
 
     with col2:
         # Configure podcast parameters
-        number_of_hosts, host_names = configure_podcast_parameters()
+        number_of_hosts, host_names, podcast_audio = configure_podcast_parameters()
 
     button_text = "Generate Presentation & Podcast"
     button_icon = icon = ':material/play_arrow:'
     success_text = "Presentation & Podcast Generated Successfully!"
-
 
 # File uploader
 st.subheader("Upload a PDF file:")
@@ -75,29 +75,67 @@ if uploaded_pdf is not None:
     # Generate button
     generate = st.button(button_text, type='primary', icon=button_icon)
 
+    # This condition will be true if Generate button is clicked or code has been run at least once
     if generate or st.session_state.scope:
         st.session_state.scope = True
-        if generate:
-            with st.spinner('Generating ...'):
+        if generate:  # This will ensure content is generated only when button is clicked.
+            status = st.status('Generating Content ...', expanded=True)  # Status to keep track of content generation
+            if content_selection in ['Presentation', 'Both']:
 
-                if content_selection in ['Presentation', 'Both']:
-                    # Generate presentation from llm
-                    st.session_state.presentation_data = generate_presentation(number_of_slides, number_of_bullet_points,
-                                                                               extracted_text, llm_selection)
-                    # Extract  presentation title, slide contents and notes
-                    presentation_title, slide_contents, slide_notes = extract_presentation_data(
-                        st.session_state.presentation_data)
+                # Container to display text temporarily
+                placeholder = status.empty()
+                placeholder.write('*Generating Presentation ...*')
 
-                    # Convert text to presentation
-                    st.session_state.pptx_file = text_to_presentation(slide_contents, presentation_title, slide_notes)
+                # Generate presentation from llm
+                st.session_state.presentation_data = generate_presentation(number_of_slides, number_of_bullet_points,
+                                                                           extracted_text, llm_selection)
+                # Extract  presentation title, slide contents and notes
+                presentation_title, slide_contents, slide_notes = extract_presentation_data(
+                    st.session_state.presentation_data)
 
-                # Generate podcast from llm if enabled
-                if content_selection in ['Podcast', 'Both']:
-                    st.session_state.podcast_data = generate_podcast(extracted_text, number_of_hosts, host_names, llm_selection)
+                # Convert text to presentation
+                st.session_state.pptx_file = text_to_presentation(slide_contents, presentation_title, slide_notes)
 
-                # Display success text and draw celebratory balloons
-                st.success(success_text)
-                st.balloons()
+                # Remove the previously displayed text
+                placeholder.empty()
+
+                # Display success status
+                status.write('*Presentation Generated* ✅ ')
+
+            # Generate podcast from llm if enabled
+            if content_selection in ['Podcast', 'Both']:
+                # Container to display text temporarily
+                placeholder = status.empty()
+                placeholder.write('*Generating Podcast ...*')
+
+                # Generate podcast from LLM
+                st.session_state.podcast_data = generate_podcast(extracted_text, number_of_hosts, host_names,
+                                                                 llm_selection)
+                # Remove previously displayed text
+                placeholder.empty()
+
+                # Display success status
+                status.write('*Podcast Generated* ✅ ')
+
+                if podcast_audio:
+                    # Container to display text temporarily
+                    placeholder = status.empty()
+                    placeholder.write('*Generating Podcast Audio ...*')
+
+                    # Generate podcast audio using TTS APIs
+                    st.session_state.audio_stream = generate_podcast_audio(st.session_state.podcast_data)
+
+                    # Remove previously displayed text
+                    placeholder.empty()
+
+                    # Display success status
+                    status.write('*Podcast Audio Generated* ✅ ')
+
+            status.update(label="Content Generated", state="complete", expanded=True)
+
+            # Display success text and draw celebratory balloons
+            # st.success(success_text)
+            # st.balloons()
 
         if content_selection in ['Presentation', 'Both'] and st.session_state.presentation_data is not None:
             # Display the presentation
@@ -105,8 +143,8 @@ if uploaded_pdf is not None:
 
         if content_selection in ['Podcast', 'Both'] and st.session_state.podcast_data is not None:
             display_podcast(st.session_state.podcast_data, file_name)
-            podcast_audio(st.session_state.podcast_data)
-
+            if podcast_audio:
+                display_podcast_audio(st.session_state.audio_stream)
 
 # Display footer
 display_footer()

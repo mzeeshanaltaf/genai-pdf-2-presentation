@@ -4,11 +4,6 @@ from elevenlabs import VoiceSettings
 from elevenlabs.client import ElevenLabs
 from display import *
 
-if "audio_data" not in st.session_state:
-    st.session_state.audio_data = None
-if "audio_scope" not in st.session_state:
-    st.session_state.audio_scope = False
-
 
 def text_to_speech_stream(text: str) -> IO[bytes]:
     client = ElevenLabs(api_key=st.secrets['ELEVENLABS_API_KEY'])
@@ -43,16 +38,9 @@ def text_to_speech_stream(text: str) -> IO[bytes]:
 
 
 # Convert podcast text into Audio
-def podcast_audio(podcast_data):
-    st.subheader('Podcast Audio 🔊:')
+def generate_podcast_audio(podcast_data):
     sentence = extract_sentences_from_podcast(podcast_data)
+    audio_stream = text_to_speech_stream(sentence)
+    return audio_stream
 
-    # Generate audio button
-    generate_audio = st.button('Generate Audio', type='primary', icon=':material/audio_file:')
-
-    if generate_audio or st.session_state.audio_scope:
-        st.session_state.audio_scope = True
-        with st.spinner('Generating Audio ...'):
-            st.session_state.audio_data = text_to_speech_stream(sentence)
-            st.audio(st.session_state.audio_data)
 

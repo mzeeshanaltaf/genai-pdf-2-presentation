@@ -95,7 +95,7 @@ def extract_sentences_from_podcast(podcast_data):
 
 # Function to display podcast data in a structured way
 def display_podcast(podcast_data, file_name):
-    st.subheader('Podcast Script🎙️:')
+    st.subheader('Podcast Script📝️:')
 
     # Display podcast script
     with st.expander('Podcast Script', icon=':material/podcasts:', expanded=True):
@@ -120,6 +120,12 @@ def display_podcast(podcast_data, file_name):
             mime=None,
             type='primary'
         )
+
+
+def display_podcast_audio(audio_stream):
+    st.subheader('Podcast Audio 🔊:')
+    audio_stream.seek(0)
+    st.audio(audio_stream)
 
 
 # Function to display pdf extracted text
