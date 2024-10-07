@@ -50,7 +50,7 @@ def configure_podcast_parameters():
 def configure_llm_selection():
     st.subheader('LLM Selection:')
     llm_selection = st.radio('Select the LLM', ["Groq", "OpenAI"], horizontal=True,
-                             captions=['model: llama-3.2-90b-text-preview', 'model: gpt-4o-mini'],
+                             captions=['model: llama-3.2-90b-text-preview', 'model: gpt-4o'],
                              label_visibility='collapsed')
     return llm_selection
 

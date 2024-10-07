@@ -11,7 +11,7 @@ def initialize_llm(llm_selection):
     if llm_selection == 'Groq':
         llm = ChatGroq(model="llama-3.2-90b-text-preview", api_key=st.secrets['GROQ_API_KEY'], temperature=0.0)
     elif llm_selection == 'OpenAI':
-        llm = ChatOpenAI(model='gpt-4o-mini', api_key=st.secrets['OPENAI_API_KEY'])
+        llm = ChatOpenAI(model='gpt-4o', api_key=st.secrets['OPENAI_API_KEY'])
     return llm
 
 
@@ -25,13 +25,14 @@ def generate_presentation(number_of_slides, number_of_bullet_points, extracted_t
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE_SLIDES)
     prompt = prompt_template.format(number_of_slides=number_of_slides,
                                     number_of_bullet_points=number_of_bullet_points,
-                                    text=extracted_text)
+                                    text=extracted_text,
+                                    general_guidelines=general_guidelines)
 
     # Get structured output from LLM
     structured_llm = llm.with_structured_output(CreatePresentation)
     structured_response = structured_llm.invoke(prompt)
     presentation_data = structured_response.dict()
-
+    print(presentation_data)
     return presentation_data
 
 

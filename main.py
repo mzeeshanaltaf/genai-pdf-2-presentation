@@ -89,12 +89,6 @@ if uploaded_pdf is not None:
                 # Generate presentation from llm
                 st.session_state.presentation_data = generate_presentation(number_of_slides, number_of_bullet_points,
                                                                            extracted_text, llm_selection)
-                # Extract  presentation title, slide contents and notes
-                presentation_title, slide_contents, slide_notes = extract_presentation_data(
-                    st.session_state.presentation_data)
-
-                # Convert text to presentation
-                st.session_state.pptx_file = text_to_presentation(slide_contents, presentation_title, slide_notes)
 
                 # Remove the previously displayed text
                 placeholder.empty()
@@ -133,17 +127,13 @@ if uploaded_pdf is not None:
 
             status.update(label="Content Generated", state="complete", expanded=True)
 
-            # Display success text and draw celebratory balloons
-            # st.success(success_text)
-            # st.balloons()
-
         if content_selection in ['Presentation', 'Both'] and st.session_state.presentation_data is not None:
             # Display the presentation
             display_presentation(st.session_state.presentation_data, file_name)
 
         if content_selection in ['Podcast', 'Both'] and st.session_state.podcast_data is not None:
             display_podcast(st.session_state.podcast_data, file_name)
-            if podcast_audio:
+            if podcast_audio and st.session_state.audio_stream is not None:
                 display_podcast_audio(st.session_state.audio_stream)
 
 # Display footer

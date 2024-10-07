@@ -1,4 +1,5 @@
 import streamlit as st
+from util import *
 
 
 @st.dialog("Slide Notes", width='large')
@@ -10,7 +11,7 @@ def slide_notes_dialog(slide_notes):
 def display_presentation(presentation_data, file_name):
     st.subheader('Presentation🖥️:')
     with st.expander('Generated Presentation', icon=':material/jamboard_kiosk:', expanded=True):
-        st.markdown(f"#### Presentation Title: :blue[{presentation_data['presentation_title']}]")
+        st.write(presentation_data['presentation_title'])
         num_columns = len(presentation_data['slides'])  # Total number of columns equal to the number of slides
         max_columns_per_row = 3  # Maximum columns per row is 3
 
@@ -38,17 +39,24 @@ def display_presentation(presentation_data, file_name):
                     with cols[col_idx]:
                         with st.container(border=True):
                             # Display the slide title
-                            st.subheader(slide['slide_title'])
+                            st.write(slide['slide_title'])
 
                             # Display the bullet points
                             for bullet in slide['bullet_points']:
-                                st.write(f"- {bullet}")
+                                st.write(bullet)
                             if st.button('Slide Notes', key=f'notes_{slide_idx}'):
                                 slide_notes_dialog(slide['slide_notes'])
                             # with st.expander('Slide Notes'):
                             #     st.write(slide['slide_notes'])
                 else:
                     cols[col_idx].empty()  # Leave empty for alignment
+
+        # Extract  presentation title, slide contents and notes
+        presentation_title, slide_contents, slide_notes = extract_presentation_data(
+            st.session_state.presentation_data)
+
+        # Convert text to presentation
+        st.session_state.pptx_file = text_to_presentation(slide_contents, presentation_title, slide_notes)
 
         # Download button for downloading presentation
         st.download_button(
@@ -124,7 +132,6 @@ def display_podcast(podcast_data, file_name):
 
 def display_podcast_audio(audio_stream):
     st.subheader('Podcast Audio 🔊:')
-    audio_stream.seek(0)
     st.audio(audio_stream)
 
 
