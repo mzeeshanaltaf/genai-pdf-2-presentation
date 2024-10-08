@@ -9,7 +9,7 @@ https://slidegenie.streamlit.app/
 # Technologies Used
 * langchain -- Orchestration framework for the development of applications using large language models (LLMs
 * LLMs: -- To generate well-structured presentations and engaging podcast scripts
-  * gpt-4o-mini from OpenAI
+  * gpt-4o from OpenAI
   * llama-3.2-90b-text-preview from Groq
 * streamlit -- Front end development
    
