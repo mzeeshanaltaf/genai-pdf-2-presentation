@@ -24,7 +24,7 @@ You must have Python 3.9 or later installed. Earlier versions of python may not 
    `pip install -r requirements.txt`
 5. Run the application with following command from terminal:
 
-   `streamlit run main.py`
+   `streamlit run app.py`
 
 # Screen Shots
 ![image](https://github.com/user-attachments/assets/68ed1193-61a9-49a7-a160-9a10b46c523e)
